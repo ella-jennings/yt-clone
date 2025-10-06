@@ -141,3 +141,5 @@ vite.config.ts.timestamp-*
 # Other
 
 .DS_Store
+processed-test-from-docker.mp4
+test.mp4

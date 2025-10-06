@@ -38,7 +38,11 @@ Run `npm ci` from the home directory will install required dependencies.
 ```
 brew install docker
 docker build -t video-processing-service . --platform linux/amd64
+docker run -p 3000:3000 -d video-processing-service
 ```
+To see the images: 
+
+`docker images`
 
 ## Running the application
 * `npm start` will start the application on `http://localhost:3000`
