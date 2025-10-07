@@ -4,8 +4,8 @@ import ffmpeg from 'fluent-ffmpeg';
 
 const storage = new Storage();
 
-const rawVideoBucketName = 'neetcode-yt-raw-videos';
-const processedVideoBucketName = 'neetcode-yt-processed-videos';
+const rawVideoBucketName = 'neetcode-yt-raw-videos-ef';
+const processedVideoBucketName = 'neetcode-yt-processed-videos-ef';
 
 const localRawVideoPath = './raw-videos';
 const localProcessedVideoPath = './processed-videos';
@@ -71,6 +71,7 @@ export async function uploadProcessedVideo(fileName: string) {
         destination: fileName,
     });
     console.log(`${localProcessedVideoPath}/${fileName} uploaded to gs://${processedVideoBucketName}/${fileName}`);
+    await bucket.file(fileName).makePublic();
 }
 
 /**
