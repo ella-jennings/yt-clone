@@ -1,5 +1,4 @@
 import express from 'express';
-import ffmpeg from 'fluent-ffmpeg';
 import {
     uploadProcessedVideo,
     downloadRawVideo,
@@ -9,6 +8,7 @@ import {
     setupDirectories
 } from './storage'
 
+setupDirectories();
 const app = express();
 app.use(express.json());
 
