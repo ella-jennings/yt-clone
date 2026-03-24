@@ -3,5 +3,5 @@ export default function Watch() {
         <div>
             <h1>Watch Page</h1>
         </div>
-    )
+    );
 }
