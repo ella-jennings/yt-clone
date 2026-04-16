@@ -7,6 +7,7 @@ import {
     convertVideo,
     setupDirectories
 } from './storage'
+import { setVideo, isVideoNew } from './firestore';
 
 setupDirectories();
 const app = express();
@@ -27,6 +28,17 @@ app.post('/process-video', async (req, res) => {
 
     const inputFileName = data.name;
     const outputFileName= `processed-${inputFileName}`;
+    const videoId = inputFileName.split('.')[0];
+
+    if (!isVideoNew(videoId)) {
+        return res.status(400).send('Bad Request: video already processing or processed.')
+    } else {
+        await setVideo(videoId, {
+            id: videoId,
+            uid: videoId.split("-")[0],
+            status: "processing",
+        })
+    }
 
     await downloadRawVideo(inputFileName);
 
@@ -41,6 +53,10 @@ app.post('/process-video', async (req, res) => {
     }
 
     await uploadProcessedVideo(outputFileName);
+    setVideo(videoId, {
+        status: 'processed',
+        filename: outputFileName,
+    })
 
     await Promise.all([
         deleteRawVideo(inputFileName),
